@@ -4,17 +4,22 @@ import { ContactList } from "./ContactList/ContactList";
 import { Container } from "./Container.styled";
 import { Filter } from "./Filter/Filter";
 import { GlobalStyles } from "./Global.styled";
+import initualContacts from "../data/contacts.json";
 
 export class App extends Component {
   state = {
-    contacts: [
-    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ],
+    contacts: initualContacts,
     filter: ''
+  };
+
+  componentDidMount() { 
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    parsedContacts && this.setState({ contacts: parsedContacts });
   }
+
+  componentDidUpdate(prevProps, prevState) { 
+    this.state.contacts !== prevState.contacts && localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+  };
 
   addContact = newContact => {
     this.setState(prevState => {

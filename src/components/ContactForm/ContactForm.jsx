@@ -19,8 +19,8 @@ export const ContactForm =({onSave})=> {
   const handleSubmit = (values, {resetForm}) => {
     resetForm();
     onSave({
-      ...values,
       id: nanoid(),
+      ...values,
     })
   }
 
